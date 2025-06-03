@@ -20,22 +20,23 @@ const images = [
 ];
 
 const Stamps = () => {
+  const tripled = [...images, ...images, ...images];
+
   return (
     <div className="relative overflow-hidden w-full py-4">
-      <div className="flex animate-seamless-scroll gap-4">
-        {/* Duplicate TWICE to ensure smooth scroll even at full end */}
-        {[...images, ...images, ...images].map((src, idx) => (
+      <div className="flex w-max animate-[seamlessScroll_40s_linear_infinite]">
+        {tripled.map((src, idx) => (
           <img
             key={idx}
             src={src}
             alt={`stamp ${idx}`}
             className="h-[400px] w-auto object-contain"
-            />
-
+          />
         ))}
       </div>
     </div>
   );
 };
+
 
 export default Stamps;

@@ -9,7 +9,11 @@ export default function Home() {
   return (
      <div className="flex flex-col items-center">
       <NameTransition onComplete={() => setShowStamps(true)} />
-      <div className={`transition-opacity duration-700 ${showStamps ? "opacity-100" : "opacity-0"}`}>
+      <div
+        className={`transition-opacity duration-700 ${
+          showStamps ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
         <Stamps />
       </div>
     </div>

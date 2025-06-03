@@ -31,20 +31,16 @@ body {
   font-family: 'Lilita One', cursive;
 }
 
+
 @keyframes seamlessScroll {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(calc(-100% / 3));
   }
 }
 
-.animate-seamless-scroll {
-  animation: seamlessScroll 150s linear infinite;
-  display: flex;
-  width: max-content;
-}
 
 
 

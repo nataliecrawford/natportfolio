@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
   const [hasScaled, setHasScaled] = useState(false);
   const [hasMoved, setHasMoved] = useState(false);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     const scaleTimer = setTimeout(() => {
@@ -13,19 +14,27 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
 
     const moveTimer = setTimeout(() => {
       setHasMoved(true);
-      if (onComplete) onComplete();
+     
     }, 2500); // move after scaling finishes (~1s later)
+
+    const doneTimer = setTimeout(() => {
+      setIsDone(true);
+       if (onComplete) {
+        onComplete();
+      }
+    }, 3500); // mark as done after moving (~1s later)
 
     return () => {
       clearTimeout(scaleTimer);
       clearTimeout(moveTimer);
+      clearTimeout(doneTimer);
     };
   }, [onComplete]);
 
   return (
     <div
       className={`relative w-full overflow-hidden transition-all duration-700 ease-in-out flex justify-center
-        ${hasMoved ? "min-h-[280px]" : "h-screen"}
+        ${isDone ? "min-h-[280px]" : "h-screen"}
       `}
     >
       <h1 className="hidden">Natalie Crawford</h1>
