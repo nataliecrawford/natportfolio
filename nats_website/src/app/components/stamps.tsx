@@ -16,6 +16,7 @@ const images = [
   "/Stamps/dublin.png",
   "/Stamps/Brussels.png",
   "/Stamps/Amalfi.png",
+  "/Stamps/leeds.png"
 ];
 
 const Stamps = () => {
