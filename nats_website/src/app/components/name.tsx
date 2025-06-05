@@ -42,17 +42,30 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
       <div
         className={`absolute transition-all duration-[1000ms] ease-in-out will-change-transform flex flex-col sm:flex-row items-center gap-x-1
           ${hasMoved
-            ? "top-0 text-[10vw] gap-x-8 translate-x-[-50%] left-1/2"
+            ? "top-0 text-[10vw] gap-x-0 translate-x-[-50%] left-1/2"
             : hasScaled
-            ? "top-1/2 text-[10vw] gap-x-8 translate-x-[-50%] translate-y-[-50%] left-1/2"
-            : "top-1/2 text-[4vw] gap-x-4 translate-x-[-50%] translate-y-[-50%] left-1/2"}
+            ? "top-1/2 text-[10vw] gap-x-0 translate-x-[-50%] translate-y-[-50%] left-1/2"
+            : "top-1/2 text-[4vw] gap-x-0 translate-x-[-50%] translate-y-[-50%] left-1/2"}
         `}
       >
-        <div className="overflow-hidden -mb-3 sm:mb-0">
-          <p className="pointer-events-none font-bold font-lilita">NATALIE</p>
+       <div className="overflow-hidden m-0 p-0">
+
+         <p
+            className="pointer-events-none font-bold font-anton transform-gpu will-change-transform leading-none"
+            style={{ transform: "scaleX(.95)" , textShadow: "1px 0 currentColor, -1px 0 currentColor"}}
+            >
+                 NATALIE
+         </p>
+
+
         </div>
         <div className="overflow-hidden">
-          <p className="pointer-events-none font-bold font-lilita">CRAWFORD</p>
+           <p
+            className="pointer-events-none font-bold font-anton transform-gpu will-change-transform leading-none"
+            style={{ transform: "scaleX(0.95)", textShadow: "1px 0 currentColor, -1px 0 currentColor"}}
+            >
+                 CRAWFORD
+         </p>
         </div>
       </div>
     </div>
