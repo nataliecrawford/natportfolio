@@ -25,7 +25,7 @@ export default function StampsSlider() {
   const containerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const x = useRef(0);
-  const speed = 3.5;
+  const speed = 2.0;
 
   useEffect(() => {
     let frameId: number;
@@ -51,10 +51,10 @@ export default function StampsSlider() {
   const tripled = [...images, ...images, ...images];
 
   return (
-    <div className="overflow-x-hidden py-12" ref={containerRef}>
+    <div className="overflow-x-hidden py-0 mt-0" ref={containerRef}>
       <div
         ref={innerRef}
-        className="w-max whitespace-nowrap flex gap-[clamp(8px,1vw,16px)] pr-[clamp(8px,1vw,16px)]"
+        className="w-max whitespace-nowrap flex gap-[clamp(px,1vw,16px)] pr-[clamp(8px,1vw,16px)]"
         style={{
           transform: `translateX(0px)`,
           transition: "transform 0s linear"
@@ -63,13 +63,13 @@ export default function StampsSlider() {
         {tripled.map((src, i) => (
           <div
             key={i}
-            className="slider-card p-2 hover:scale-105"
+            className="slider-card p-1 hover:scale-105"
             style={{
               opacity: 1,
               transform: "none"
             }}
           >
-            <div className="w-[clamp(260px,20vw,400px)] h-[clamp(320px,25vw,450px)] rounded-lg overflow-hidden relative select-none">
+            <div className="w-[clamp(280px,25vw,480px)] h-[clamp(320px,30vw,540px)] rounded-lg overflow-hidden relative select-none">
               <img
                 alt={`Stamp ${i + 1}`}
                 src={src}

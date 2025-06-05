@@ -34,7 +34,7 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
   return (
     <div
       className={`relative w-full overflow-hidden transition-all duration-700 ease-in-out flex justify-center
-        ${isDone ? "min-h-[280px]" : "h-screen"}
+        ${isDone ? "min-h-[200px]" : "h-screen"}
       `}
     >
       <h1 className="hidden">Natalie Crawford</h1>
@@ -42,7 +42,7 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
       <div
         className={`absolute transition-all duration-[1000ms] ease-in-out will-change-transform flex flex-col sm:flex-row items-center gap-x-1
           ${hasMoved
-            ? "top-12 text-[10vw] gap-x-8 translate-x-[-50%] left-1/2"
+            ? "top-0 text-[10vw] gap-x-8 translate-x-[-50%] left-1/2"
             : hasScaled
             ? "top-1/2 text-[10vw] gap-x-8 translate-x-[-50%] translate-y-[-50%] left-1/2"
             : "top-1/2 text-[4vw] gap-x-4 translate-x-[-50%] translate-y-[-50%] left-1/2"}
