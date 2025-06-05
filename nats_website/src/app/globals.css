@@ -2,6 +2,7 @@
 @import "tailwindcss";
 
 
+
 :root {
   --background: #e2b3c2;
   --foreground: #781727;
@@ -32,15 +33,10 @@ body {
 }
 
 
-@keyframes seamlessScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-100% / 3));
-  }
+/* Optional: slider-card hover/transition style */
+.slider-card {
+  transition: transform 0.3s ease;
 }
-
-
-
-
+.slider-card:hover {
+  transform: scale(1.03);
+}
