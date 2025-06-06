@@ -51,8 +51,19 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
        <div className="overflow-hidden m-0 p-0">
 
          <p
-            className="pointer-events-none font-bold font-anton transform-gpu will-change-transform leading-none"
-            style={{ transform: "scaleX(.95)" , textShadow: "1px 0 currentColor, -1px 0 currentColor"}}
+            className="pointer-events-none font-bold font-inter transform-gpu will-change-transform leading-none"
+            style={{ transform: "scaleX(.95)" , 
+                textShadow: `
+                    2px 0 var(--six),
+                    -2px 0 var(--six),
+                    0 2px var(--six),
+                    0 -2px var(--six),
+                    2px 2px var(--six),
+                    -2px -2px var(--six),
+                    2px -2px var(--six),
+                    -2px 2px var(--six)
+                    `
+            }}
             >
                  NATALIE
          </p>
@@ -61,8 +72,18 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
         </div>
         <div className="overflow-hidden">
            <p
-            className="pointer-events-none font-bold font-anton transform-gpu will-change-transform leading-none"
-            style={{ transform: "scaleX(0.95)", textShadow: "1px 0 currentColor, -1px 0 currentColor"}}
+            className="pointer-events-none font-bold font-inter transform-gpu will-change-transform leading-none"
+            style={{ transform: "scaleX(0.95)", 
+                textShadow: `
+                    2px 0 var(--six),
+                    -2px 0 var(--six),
+                    0 2px var(--six),
+                    0 -2px var(--six),
+                    2px 2px var(--six),
+                    -2px -2px var(--six),
+                    2px -2px var(--six),
+                    -2px 2px var(--six)
+                    `}}
             >
                  CRAWFORD
          </p>

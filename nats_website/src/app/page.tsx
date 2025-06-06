@@ -2,6 +2,7 @@
 import { useState } from "react";
 import NameTransition from "../app/components/name";
 import Stamps from "../app/components/stamps";
+import Navbar from "./components/navbar";
 
 export default function Home() {
   const [showStamps, setShowStamps] = useState(false);
@@ -15,6 +16,11 @@ export default function Home() {
         }`}
       >
         <Stamps />
+
+        
+      </div>
+      <div className="mt-8 w-full">
+        <Navbar />
       </div>
     </div>
   );
