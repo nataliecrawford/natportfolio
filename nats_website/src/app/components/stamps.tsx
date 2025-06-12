@@ -4,21 +4,23 @@ import { useEffect, useRef } from "react";
 
 const images = [
   "/Stamps/Santorini.png",
+  "/Stamps/Morocco.png",
   "/Stamps/Rome.png",
-  "/Stamps/Marrakesh.png",
   "/Stamps/Madrid.png",
   "/Stamps/London.png",
-  "/Stamps/lisbon.png",
+  "/Stamps/Lisbon.png",
   "/Stamps/Edinburgh.png",
-  "/Stamps/liverpool.png",
+  "/Stamps/Liverpool.png",
   "/Stamps/Barcelona.png",
-  "/Stamps/galway.png",
+  "/Stamps/Galway.png",
   "/Stamps/Florence.png",
-  "/Stamps/England.png",
-  "/Stamps/dublin.png",
+  "/Stamps/Marseille.png",
+  "/Stamps/Dublin.png",
   "/Stamps/Brussels.png",
   "/Stamps/Amalfi.png",
-  "/Stamps/leeds.png"
+  "/Stamps/Leeds.png",
+  "/Stamps/Nice.png",
+  "/Stamps/Genoa.png",
 ];
 
 export default function StampsSlider() {
