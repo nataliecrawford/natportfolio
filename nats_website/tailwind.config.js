@@ -6,6 +6,7 @@ module.exports = {
         bebas: ['"Bebas Neue"', 'sans-serif'],
         anton: ['"Anton"', 'sans-serif'],
         inter: ['"Inter"', 'sans-serif'],
+        raleway: ['"Raleway"', 'sans-serif'],
       },
     },
   },

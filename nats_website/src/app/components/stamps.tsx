@@ -53,6 +53,10 @@ export default function StampsSlider() {
   const tripled = [...images, ...images, ...images];
 
   return (
+    <div className="w-full">
+
+    
+
     <div className="overflow-x-hidden py-0 mt-0" ref={containerRef}>
       <div
         ref={innerRef}
@@ -81,6 +85,7 @@ export default function StampsSlider() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

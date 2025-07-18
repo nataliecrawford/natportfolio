@@ -2,6 +2,7 @@
 @import url('https://fonts.google.com/share?selection.family=Bebas+Neue');
 @import url('https://fonts.google.com/share?selection.family=Anton');
 @import url('https://fonts.google.com/share?selection.family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
 @import "tailwindcss";
 
 
@@ -10,15 +11,21 @@
   --background: #1db4f2;
   --foreground: #781727;
   --text: #b0ebf6;
-  --one: #4e0714;
-  --two: #ac5b67;
-  --three: #F3A5BC;
-  --four: #efd4c4;
-  --five: #5e6623;
+  --one: #db1f45;
+  --two: #3d9940;
+  --three: #fb9750;
+  --four: #efbd27;
+  --five: #fe8ba6;
   --six: #FFFFFF;
-  --seven: #c3c18b;
-  --eight: #4d4d21;
+  --seven: #fbae58;
+  --eight: #ede3b6;
+  --nine: #79c329;
+  --ten: #7c1a28;
 
+}
+
+html {
+  overflow: auto !important;
 }
 
 @theme inline {
@@ -26,18 +33,20 @@
   --color-foreground: var(--foreground);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #9d9c6a;
-    --foreground: #ededed;
-  }
-}
+
 
 body {
   background: var(--background);
   color: var(--text);
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  overscroll-behavior: none;
 }
+
+.h-font {
+  font-family: 'DM Serif Text', sans-serif;
+}
+
 
 
 /* Optional: slider-card hover/transition style */

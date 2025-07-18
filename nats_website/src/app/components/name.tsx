@@ -34,7 +34,7 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
   return (
     <div
       className={`relative w-full overflow-hidden transition-all duration-700 ease-in-out flex justify-center
-        ${isDone ? "min-h-[200px]" : "h-screen"}
+        ${isDone ? "min-h-[150px]" : "h-screen"}
       `}
     >
       <h1 className="hidden">Natalie Crawford</h1>
@@ -51,7 +51,7 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
        <div className="overflow-hidden m-0 p-0">
 
          <p
-            className="pointer-events-none font-bold font-inter transform-gpu will-change-transform leading-none"
+            className="pointer-events-none font-bold font-inter transform-gpu will-change-transform leading-none m-0 p-0 "
             style={{ transform: "scaleX(.95)" , 
                 textShadow: `
                     2px 0 var(--six),
@@ -72,7 +72,7 @@ const NameTransition = ({ onComplete }: { onComplete?: () => void }) =>{
         </div>
         <div className="overflow-hidden">
            <p
-            className="pointer-events-none font-bold font-inter transform-gpu will-change-transform leading-none"
+            className="pointer-events-none font-bold font-inter transform-gpu will-change-transform leading-none m-0 p-0 "
             style={{ transform: "scaleX(0.95)", 
                 textShadow: `
                     2px 0 var(--six),
