@@ -25,11 +25,11 @@ const projectCards = [
 
 const Projects = () => {
   return (
-    <div className="p-4 max-w-7xl mx-auto">
+    <div className="p-4 max-w-7xl mx-auto my-15">
       <h2 className="h-font text-[clamp(32px,6vw,64px)] font-bold mb-8 text-center">
         Projects
       </h2>
-      <div className="h-[65vh] flex flex-col lg:flex-row gap-10">
+      <div className="h-[80vh] flex flex-col lg:flex-row gap-10">
         {projectCards.map((card, index) => (
           <div
             key={index}

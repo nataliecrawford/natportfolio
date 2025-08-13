@@ -47,12 +47,13 @@ body {
   font-family: 'DM Serif Text', sans-serif;
 }
 
+.force-scale-reset {
+  transform: scale(1) !important;
+  transition: transform 0.1s ease-out;
+}
 
 
 /* Optional: slider-card hover/transition style */
 .slider-card {
   transition: transform 0.3s ease;
-}
-.slider-card:hover {
-  transform: scale(1.03);
 }

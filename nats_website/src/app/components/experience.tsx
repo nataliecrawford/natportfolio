@@ -1,7 +1,7 @@
 "use client";
 import Lenis from '@studio-freight/lenis';
 import { useScroll, useTransform, motion, useMotionValueEvent, easeOut,  easeInOut, useInView } from "framer-motion";
-import { useRef, useEffect, } from "react";
+import { useRef, useEffect,useState } from "react";
 import { MotionValue, useMotionValue } from "framer-motion";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ const cards = [
     title: "929 Kitchen & Bar",
     description: "Worked as a server in a fast-paced restaurant environment.",
     tags: ["Restaurant Industry", "Server", "Multitasking"],
-    image: "/images/services/image-1.jpg",
+    images: ["/929/image1.jpg", "/929/image2.jpg", "/929/image3.jpg"],
     bgColor: "#bf052b",
     textColor: "#821322",
   },
@@ -24,7 +24,7 @@ const cards = [
     title: "MOA Korean BBQ",
     description: "Provided attentive service in a high-volume BBQ restaurant.",
     tags: ["Customer Service", "Teamwork", "Fast-Paced"],
-    image: "/images/services/image-2.jpg",
+    images: ["/MOA/image1.jpg", "/MOA/image2.jpg", "/MOA/image3.jpg"],
     bgColor: "#db1f45",
     textColor: "#7c1a28",
   },
@@ -32,7 +32,7 @@ const cards = [
     title: "Capgemini",
     description: "Intern, MS Azure Technology, Smart Herb Garden",
     tags: ["Full Stack", "Front End", "Consulting"],
-    image: "/images/services/image-6.jpg",
+    images: ["/Cap/image1.webp", "/Cap/image2.webp"],
     bgColor: "#0a5dd8",
     textColor: "#94e0fa",
   },
@@ -40,7 +40,7 @@ const cards = [
     title: "1801 Grille",
     description: "Greeted and seated guests with a warm and welcoming demeanor.",
     tags: ["Host", "Upselling", "Teamwork"],
-    image: "/images/services/image-3.jpg",
+    images: ["/1801/image1.jpeg", "/1801/image2.jpg", "/1801/image3.webp"],
     bgColor: "#fc3f6f",
     textColor: "#7c1a28",
   },
@@ -48,7 +48,7 @@ const cards = [
     title: "University of South Carolina",
     description: "Data Science Software Developer Research Assistant",
     tags: ["Data Science", "Research", "Python"],
-    image: "/images/services/image-1.jpg",
+    images: ["/Research/image1.webp", "/Research/image2.png", "/Research/image3.png"],
     bgColor: "#1687e3",
     textColor: "#94e0fa",
   },
@@ -56,7 +56,7 @@ const cards = [
     title: "Pelican's SnoBalls",
     description: "Managed cash register and served customers with care.",
     tags: ["Cashier", "Customer Service", "Attention to Detail"],
-    image: "/images/services/image-4.jpg",
+    images: ["/Pelicans/IMG_1376.JPG", "/Pelicans/image2.JPG", "/Pelicans/image3.jpg"],
     bgColor: "#fe8ba6",
     textColor: "#7c1a28",
   },
@@ -64,7 +64,7 @@ const cards = [
     title: "Dance Department",
     description: "Choreographed and taught dance routines to students.",
     tags: ["Instructor", "Choreography", "Leadership"],
-    image: "/images/services/image-5.jpg",
+    images: ["/DD/image1.jpg", "/DD/image2.JPG", "/DD/image3.jpg"],
     bgColor: "#feb9c7",
     textColor: "#7c1a28",
   },
@@ -78,6 +78,20 @@ interface AnimatedCardProps {
 }
 
 const AnimatedCard = ({ card, index, scrollProgress, totalCards }: AnimatedCardProps) => {
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    if (!card.images || card.images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % card.images.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [card.images]);
+
+
+
   const cardHeight = 85; // vh
 
  
@@ -166,12 +180,12 @@ const AnimatedCard = ({ card, index, scrollProgress, totalCards }: AnimatedCardP
             </ul>
           </div>
 
-          <div className="relative w-full lg:w-5/12 h-[250px] lg:h-[clamp(350px,25vw,600px)] rounded-lg lg:rounded-2xl overflow-hidden mb-4 lg:mb-0">
+          <div className="relative w-full lg:w-5/12 h-[450px] lg:h-[clamp(400px,25vw,600px)] rounded-lg lg:rounded-2xl overflow-hidden mb-4 lg:mb-0">
             <Image
-              src={card.image}
-              alt={card.title}
+              src={card.images?.[currentImage] || "/fallback.jpg"}
+              alt={`${card.title} Image`}
               fill
-              className="object-cover object-center pointer-events-none"
+              className="object-cover object-center pointer-events-none transition-opacity duration-500"
             />
           </div>
         </div>
@@ -199,7 +213,7 @@ const Exp = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative sticky top-0 h-[190vh] overflow-hidden"
+      className="relative sticky top-0 h-[190vh] overflow-hidden my-15"
        
     >
       {/* Header (fixed position) */}

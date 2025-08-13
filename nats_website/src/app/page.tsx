@@ -8,6 +8,7 @@ import Education from "./components/education";
 import Projects from "./components/projects";
 import Intro from "./components/intro";
 import Bio from "./components/bio";
+import Skills from "./components/skills";
 
 export default function Home() {
   const [showInfo, setShowInfo] = useState(false);
@@ -35,6 +36,9 @@ export default function Home() {
         </div>
         <div className="mt-8 w-full">
           <Education />
+        </div>
+         <div className="mt-8 w-full">
+          <Skills />
         </div>
       </div>
     </div>
