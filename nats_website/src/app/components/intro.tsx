@@ -3,12 +3,9 @@ import { useState, useEffect } from "react";
 
 const Intro = () => {
   const phrases = [
-    "Innovative Developer",
-    "UX Strategist",
-    "UI Designer",
     "Front-End Engineer",
-    "Web Architect",
-    "Product Thinker",
+    "Web Developer",
+    "Artistic Creator",
   ];
 
   const [currentPhrase, setCurrentPhrase] = useState(0);

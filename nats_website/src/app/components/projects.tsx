@@ -15,10 +15,16 @@ const projectCards = [
     textColor: "#caff91",
   },
   {
-    title: "Camp System",
+    title: "Redesign of 25Live",
     description: "blah blah blah blah",
     bgColor: "#79c329",
     textColor: "#355d08",
+  },
+   {
+    title: "Camp System",
+    description: "blah blah blah blah",
+    bgColor: "#97d45a",
+    textColor: "#576b44",
   },
   
 ];
