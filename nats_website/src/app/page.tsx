@@ -18,7 +18,7 @@ export default function Home() {
       <NameTransition onComplete={() => setShowInfo(true)} />
       <div
         className={`transition-opacity duration-700 w-full flex flex-col items-center ${
-          showInfo ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          showInfo ? "opacity-100 pointer-events-auto max-h-[9999px]" : "opacity-0 pointer-events-none max-h-[0vh] overflow-hidden"
         }`}
       >
         <Intro />
