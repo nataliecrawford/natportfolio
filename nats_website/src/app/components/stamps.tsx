@@ -44,6 +44,7 @@ export default function StampsSlider() {
   type Rect = { top: number; left: number; width: number; height: number };
   const [startRect, setStartRect] = useState<Rect | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [stampAspectRatio, setStampAspectRatio] = useState<number | null>(null);
   const [showPostcard, setShowPostcard] = useState(false);
   const [clickedStampIndex, setClickedStampIndex] = useState<number | null>(null);
   const [stampOpacity, setStampOpacity] = useState(1);
@@ -80,7 +81,7 @@ export default function StampsSlider() {
 
   const getPostcardTarget = () => {
     const maxHeight = window.innerHeight * 0.95;
-    const width = maxHeight * (18 / 24);
+    const width = maxHeight * (stampAspectRatio ?? (18 / 24));
     const top = window.innerHeight / 2 - maxHeight / 2;
     const left = window.innerWidth / 2 - width / 2;
     return { top, left, width, height: maxHeight };
@@ -113,45 +114,45 @@ export default function StampsSlider() {
 
     // Calculate stamp size (20% of postcard width)
     const stampWidth = postcardWidth * 0.23;
-    const stampHeight = stampWidth * (24 / 18); // Maintain stamp aspect ratio
+    console.log("ASPECT:::: ", stampAspectRatio);
+    const stampHeight = stampWidth * (1/(stampAspectRatio ?? (18 / 24))); // Maintain stamp aspect ratio
 
     return {
       left: postcardLeft + (postcardWidth * stampPosition.left) - (stampWidth / 2),
-      top: postcardTop + (postcardHeight * stampPosition.top) - (stampHeight / 2),
+      top: postcardTop + (postcardHeight * stampPosition.top) - (stampHeight / 2) + 1,
       width: stampWidth,
       height: stampHeight
     };
+
   };
-
+  // 2) Capture the exact rect from the inner box, not the padded .slider-card
   const handleClick = (stamp: Stamp, index: number) => {
-    const stampEl = stampRefs.current[index];
-    const innerEl = innerRef.current;
-    if (!stampEl || !innerEl) return;
+    const cardEl = stampRefs.current[index];
+    if (!cardEl || !innerRef.current || !containerRef.current) return;
 
-    const rect = stampEl.getBoundingClientRect();
-    const containerRect = containerRef.current!.getBoundingClientRect();
+    const wrapEl = cardEl.querySelector('.stamp-wrap') as HTMLDivElement | null;
+    if (!wrapEl) return;
 
-    // Get current translateX value
-    const transformX = x.current;
+    // rect of the *visual* box (no padding)
+    const rect = wrapEl.getBoundingClientRect();
+    const aspectRatio = rect.width / rect.height; // ← This is the original AR
 
-    // Offset left relative to outer container + translate
-    const correctedLeft = rect.left - containerRect.left - transformX;
-    const correctedTop = rect.top;
-
-    const aspectRatio = 18 / 24;
-    const newWidth = rect.height * aspectRatio;
-
-    console.log("rect.left", rect.left, "x.current", x.current);
+    // store the current strip transform so return uses the same frame of reference
+    const transformXAtClick = x.current;
 
     setStartRect({
-      top: correctedTop,
+      top: rect.top,
       left: rect.left,
-      width: newWidth,
+      width: rect.width,          // <- use the real width
       height: rect.height,
+      // optional: store transform too if you want to assert it hasn't changed
+      // @ts-ignore
+      transformX: transformXAtClick,
     });
 
+    setStampAspectRatio(aspectRatio);
     setSelectedStamp(stamp);
-    setClickedStampIndex(index % images.length);
+    setClickedStampIndex(index);  // store the *exact* index, not modulo
     setAnimationPhase(1);
     setIsAnimating(true);
     setStampOpacity(1);
@@ -239,7 +240,7 @@ export default function StampsSlider() {
                   pointerEvents: shouldHideOriginal ? 'none' : 'auto'
                 }}
               >
-                <div className="w-[clamp(280px,25vw,480px)] h-[clamp(320px,30vw,540px)] rounded-lg overflow-hidden relative select-none">
+                <div className="stamp-wrap w-[clamp(280px,25vw,480px)] h-[clamp(320px,30vw,540px)] rounded-lg overflow-hidden relative select-none">
                   <img
                     alt={stamp.name}
                     src={stamp.src}
@@ -276,8 +277,10 @@ export default function StampsSlider() {
                   transition: { duration: 0.8, ease: "easeInOut" },
                 }}
                 exit={{ opacity: 0 }}
+                className="object-cover object-center select-none pointer-events-none"
                 style={{ position: "fixed", zIndex: 1000, borderRadius: "12px" }}
                 onAnimationComplete={handleCenterComplete}
+                draggable={false}
               />
             )}
 
@@ -300,6 +303,7 @@ export default function StampsSlider() {
                   height: getFinalTarget().height,
                   transition: { duration: 0.6, ease: "easeInOut" },
                 }}
+                className="object-cover object-center select-none pointer-events-none"
                 style={{ position: "fixed", zIndex: 1000, borderRadius: "12px", opacity: stampOpacity }}
                 onAnimationComplete={handleFinalComplete}
               />
@@ -333,6 +337,7 @@ export default function StampsSlider() {
                     setIsAnimating(false);
                     setReadyToRevealOriginal(false); // reset for next time
                   }}
+                  className="object-cover object-center select-none pointer-events-none"
                   style={{
                     position: "fixed",
                     zIndex: 1000,

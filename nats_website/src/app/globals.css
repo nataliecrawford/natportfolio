@@ -57,3 +57,8 @@ body {
 .slider-card {
   transition: transform 0.3s ease;
 }
+
+/* Prevent layout from shifting when scrollbars appear/disappear */
+html {
+  scrollbar-gutter: stable both-edges;
+}
