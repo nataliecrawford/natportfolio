@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const cards = [
@@ -68,6 +68,7 @@ const cards = [
 ];
 
 
+
 const ArtExp = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -85,6 +86,102 @@ const ArtExp = () => {
 
   const openModal = (img: { src: string; caption: string; des: string; }) => setModalImage(img);
   const closeModal = () => setModalImage(null);
+
+  // --- add near top of component ---
+  const [zooming, setZooming] = useState(false);
+  const [lensStyle, setLensStyle] = useState<React.CSSProperties>({});
+  const [imgAR, setImgAR] = useState<number | null>(null); // natural aspect ratio (w/h)
+  const imgWrapId = "modal-zoom-wrap";
+
+  const LENS_SIZE = 300;
+  const ZOOM = 3;
+
+  // Load natural dimensions to get the true aspect ratio
+  useEffect(() => {
+    if (!modalImage) return;
+    const i = new window.Image();
+    i.src = modalImage.src;
+    i.onload = () => setImgAR(i.naturalWidth / i.naturalHeight);
+  }, [modalImage]);
+
+  // Compute the actual drawn image rect inside the container when using object-contain
+  function getContainedRect(container: DOMRect, ar: number) {
+    const containerAR = container.width / container.height;
+    if (containerAR > ar) {
+      // limited by height
+      const h = container.height;
+      const w = h * ar;
+      const x = container.left + (container.width - w) / 2;
+      const y = container.top;
+      return { x, y, width: w, height: h };
+    } else {
+      // limited by width
+      const w = container.width;
+      const h = w / ar;
+      const x = container.left;
+      const y = container.top + (container.height - h) / 2;
+      return { x, y, width: w, height: h };
+    }
+  }
+
+  const handleMouseMove: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    const wrap = document.getElementById(imgWrapId);
+    if (!wrap || !imgAR) return;
+
+    const rect = wrap.getBoundingClientRect();
+    const imgRect = getContainedRect(rect, imgAR);
+
+    // Check if cursor is inside the *image* area (not the letterboxed bg)
+    const inside =
+      e.clientX >= imgRect.x &&
+      e.clientX <= imgRect.x + imgRect.width &&
+      e.clientY >= imgRect.y &&
+      e.clientY <= imgRect.y + imgRect.height;
+
+    if (!inside) {
+      setZooming(false);
+      return;
+    }
+
+    if (!zooming) setZooming(true);
+
+    // position inside the image rect
+    const relX = e.clientX - imgRect.x;
+    const relY = e.clientY - imgRect.y;
+
+    // clamp lens to stay fully within the image rect
+    const half = LENS_SIZE / 2;
+    const cx = Math.max(half, Math.min(imgRect.width - half, relX));
+    const cy = Math.max(half, Math.min(imgRect.height - half, relY));
+
+    // bg % relative to the image rect, not the whole container
+    const bgX = (relX / imgRect.width) * 100;
+    const bgY = (relY / imgRect.height) * 100;
+
+    const bgW = imgRect.width * ZOOM;
+    const bgH = imgRect.height * ZOOM;
+
+    // lens is positioned relative to the container's top-left
+    setLensStyle({
+      position: "absolute",
+      left: `${imgRect.x - rect.left + cx - half}px`,
+      top: `${imgRect.y - rect.top + cy - half}px`,
+      width: `${LENS_SIZE}px`,
+      height: `${LENS_SIZE}px`,
+      borderRadius: "12px",
+      boxShadow: "0 6px 24px rgba(0,0,0,0.2)",
+      backgroundImage: `url(${modalImage?.src})`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: `${bgW}px ${bgH}px`,
+      backgroundPosition: `${bgX}% ${bgY}%`,
+      pointerEvents: "none",
+      zIndex: 10,
+    });
+  };
+
+const handleMouseLeave: React.MouseEventHandler<HTMLDivElement> = () => {
+  setZooming(false);
+};
 
 
 return (
@@ -170,22 +267,40 @@ return (
               &times;
             </button>
 
-            {/* Left: Image section - takes up ~65% */}
-            <div className="relative w-full lg:w-[65%] h-full flex items-center justify-center">
-              <div className="relative w-full h-[95%]">
-              <Image
-                src={modalImage.src}
-                alt={modalImage.caption}
-                fill
-                className="object-contain rounded-l-2xl"
-              />
+           {/* Left: Image section - takes up ~65% */}
+            <div className="relative w-full lg:w-[65%] h-full flex items-center justify-center pl-6">
+              <div
+                id={imgWrapId}
+                className="relative w-full h-[95%]"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+              >
+                
+                {/* Base image */}
+                <Image
+                  src={modalImage.src}
+                  alt={modalImage.caption}
+                  fill
+                  className="object-contain rounded-2xl"
+                  priority
+                />
+
+                {/* Zoom lens only when cursor is over the actual image area */}
+                {zooming && (
+                  <div
+                    style={lensStyle}
+                    className="border border-white/70 backdrop-blur-[0.5px]"
+                  />
+                )}
               </div>
             </div>
 
+
+
             {/* Right: Description */}
-            <div className="w-full lg:w-[35%] h-full p-6 overflow-y-auto text-black flex flex-col justify-center">
-              <h3 className="h-font text-2xl font-semibold mb-4">{modalImage.caption}</h3>
-              <p className="bio-font text-lg leading-relaxed">{modalImage.des}</p>
+            <div className="w-full lg:w-[35%] h-full p-6 overflow-y-auto text-[#ffffff] flex flex-col justify-center pr-10">
+              <h3 className="h-font text-3xl font-semibold mb-4">{modalImage.caption}</h3>
+              <p className="bio-font text-lg font-semibold leading-relaxed">{modalImage.des}</p>
             </div>
           </div>
         </div>
