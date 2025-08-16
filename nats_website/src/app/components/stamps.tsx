@@ -52,6 +52,7 @@ export default function StampsSlider() {
   const [postcardOpacity, setPostcardOpacity] = useState(0);
   const [readyToRevealOriginal, setReadyToRevealOriginal] = useState(false);
 
+  
 
   useEffect(() => {
     const scroll = () => {
@@ -78,6 +79,9 @@ export default function StampsSlider() {
   }, [paused]);
 
     const [animationPhase, setAnimationPhase] = useState<number>(0); // 0 = not animating, 1 = scaling up, 2 = moving to final position
+    // compute this every render
+    const floaterOpacity =
+      animationPhase === 2 ? (1 - postcardOpacity) : 1; // phase 2 only: inverse of postcard
 
   const getPostcardTarget = () => {
     const maxHeight = window.innerHeight * 0.95;
@@ -174,18 +178,17 @@ export default function StampsSlider() {
 
 
   const handleFinalComplete = () => {
-    setIsAnimating(false);
     setStampOpacity(0);
+    setIsAnimating(false);
   };
 
   const closeModal = async () => {
-    // Start fade out animation for postcard
-    setPostcardOpacity(0);
+   
+    setShowPostcard(false);
     setStampOpacity(1);
-    
     // Wait for fade out to complete
     await new Promise(resolve => setTimeout(resolve, 200));
-    
+    setStampOpacity(1);
     // Start reverse animation for stamp
     setAnimationPhase(3); // New phase for reverse animation
     setIsAnimating(true);
@@ -235,7 +238,7 @@ export default function StampsSlider() {
                 onClick={(e) => handleClick(stamp, i)}
                 style={{
                   opacity: shouldHideOriginal ? 0 : 1,
-                  transform: isAnimatingStamp ? "scale(1)" : undefined,
+                  transform: "scale(1)",
                   transition: 'opacity 0.3s ease',
                   pointerEvents: shouldHideOriginal ? 'none' : 'auto'
                 }}
@@ -304,7 +307,7 @@ export default function StampsSlider() {
                   transition: { duration: 0.6, ease: "easeInOut" },
                 }}
                 className="object-cover object-center select-none pointer-events-none"
-                style={{ position: "fixed", zIndex: 1000, borderRadius: "12px", opacity: stampOpacity }}
+                style={{ position: "fixed", zIndex: 1000, borderRadius: "12px", opacity:stampOpacity}}
                 onAnimationComplete={handleFinalComplete}
               />
             )}
@@ -319,6 +322,7 @@ export default function StampsSlider() {
                     left: getFinalTarget().left,
                     width: getFinalTarget().width,
                     height: getFinalTarget().height,
+                    zIndex: 1001,
                   }}
                   animate={{
                     top: startRect!.top,
@@ -326,10 +330,11 @@ export default function StampsSlider() {
                     width: startRect!.width,
                     height: startRect!.height,
                     transition: { duration: 0.8, ease: "easeInOut" },
+                    zIndex: 1001,
                   }}
-                  onAnimationStart={() => {
-                    // Delay slightly before revealing the original
-                    setTimeout(() => setReadyToRevealOriginal(true), 800); // ~200ms before end
+                  
+                  onAnimationStart={() => { // Delay slightly before revealing the original 
+                    setTimeout(() => setReadyToRevealOriginal(true), 620); // ~200ms before end 
                   }}
                   onAnimationComplete={() => {
                     setClickedStampIndex(null);
@@ -340,9 +345,14 @@ export default function StampsSlider() {
                   className="object-cover object-center select-none pointer-events-none"
                   style={{
                     position: "fixed",
-                    zIndex: 1000,
+                    zIndex: 1001,                 // below the postcard (which will be 1000+)
                     borderRadius: "12px",
+                    willChange: "top,left,width,height,opacity,transform",
+                    backfaceVisibility: "hidden",
+                    transform: "translateZ(0)",
+                    opacity:stampOpacity
                   }}
+
                 />
               )}
 
@@ -355,14 +365,17 @@ export default function StampsSlider() {
       
       {showPostcard && selectedStamp && (
         <motion.div
+         style={{ zIndex: 999, position: "fixed", inset: 0 }}
           initial={{ opacity: 0 }}
           animate={{ opacity: postcardOpacity }}
+          
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
           <PostcardModal
             postcardName={selectedStamp.name}
             onClose={closeModal}
+
           />
         </motion.div>
       )}
