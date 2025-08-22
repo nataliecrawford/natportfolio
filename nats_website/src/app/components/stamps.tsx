@@ -21,6 +21,7 @@ const images = [
   {name: "Barcelona", src: "/Stamps/Barcelona.png"},
   {name: "Galway", src: "/Stamps/Galway.png"},
   {name: "Florence", src: "/Stamps/Florence.png"},
+  {name: "LakeDist", src: "/Stamps/LakeDist.png"},
   {name: "Marseille", src:"/Stamps/Marseille.png"},
   {name: "Dublin", src:"/Stamps/Dublin.png"},
   {name: "Brussels", src: "/Stamps/Brussels.png"},
@@ -28,6 +29,8 @@ const images = [
   {name: "Leeds", src: "/Stamps/Leeds.png"},
   {name: "Nice", src: "/Stamps/Nice.png"},
   {name: "Genoa", src: "/Stamps/Genoa.png"},
+  {name: "Cinque", src: "/Stamps/Cinque.png"},
+  {name: "York", src: "/Stamps/York.png"},
 ];
 
 export default function StampsSlider() {
@@ -221,8 +224,8 @@ export default function StampsSlider() {
         >
           {tripled.map((stamp, i) => {
             // Check if this is the clicked stamp (considering the tripled array)
-            const isAnimatingStamp = clickedStampIndex !== null &&
-              (i % images.length === clickedStampIndex);
+            const isAnimatingStamp =
+                selectedStamp && stamp.name === selectedStamp.name;
 
             const shouldHideOriginal = isAnimatingStamp &&
               (animationPhase === 1 || animationPhase === 2 || (animationPhase === 3 && !readyToRevealOriginal));
