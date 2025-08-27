@@ -589,27 +589,87 @@ const postcards = [
   },
   { name: "Nice", 
     src: "/Postcards/NicePostcard.png", 
-    des: "Nice", 
+    des: "I visited Nice with one friend, and when leaving we took a day trip to Monte Carlo where we spent time wandering around and exploring. While in Nice, we went to Place Masséna, saw the beach, walked through Cours Saleya, and hiked up to Colline du Château to see the waterfalls at Les Cascades de Nice. We ended the day with some delicious gelato while enjoying the city’s vibrant atmosphere.", 
     recs: [
-
+      "Restaurant le Galet", 
+      "Fenocchio Glacier"
     ] ,
-    photos: []
+    photos: ["/Postcards/Nice/image1.jpg",
+        "/Postcards/Nice/image2.jpg",
+        "/Postcards/Nice/image3.jpg",
+        "/Postcards/Nice/image4.jpg",
+        "/Postcards/Nice/image5.jpg",
+        "/Postcards/Nice/image6.jpg",
+        "/Postcards/Nice/image7.jpg",
+        "/Postcards/Nice/image8.jpg",
+        "/Postcards/Nice/image9.jpg",
+        "/Postcards/Nice/image10.jpg",
+        "/Postcards/Nice/image11.jpg",
+        "/Postcards/Nice/image13.jpg",
+        "/Postcards/Nice/image14.jpg",
+        "/Postcards/Nice/image15.jpg",
+        "/Postcards/Nice/image16.jpg",
+        "/Postcards/Nice/image18.jpg",]
   },
   { name: "Genoa", 
     src: "/Postcards/GenoaPostcard.png", 
-    des: "Genoa", 
+    des: " I visited Genoa with one friend, and our trip started with wine night. Next day for lunch we had one of the best meals I’ve ever had, a pesto pizza. We explored several cathedrals, tried the city’s famous focaccia, and of course sampled pesto in its birthplace. Highlights included visiting Palazzo Ducale Fondazione per la Cultura, wandering through Piazza De Ferrari, and seeing the childhood home of Christopher Columbus. We also took a day trip to Bogliasco, where we spent time exploring and enjoying the small coastal town’s charm.", 
     recs: [
+      "Gran Ristoro", 
+      "Calice", 
+      "IL Ristoro dei Grimaldi", 
+      "Focacceria Genovese", 
+      "Pestobene", 
+      "Trallallero Trattoria Genovese"
       
     ] ,
-    photos: []
+    photos: [
+        "/Postcards/Genoa/image1.jpg",
+        "/Postcards/Genoa/image2.jpg",
+        "/Postcards/Genoa/image3.jpg",
+        "/Postcards/Genoa/image4.jpg",
+        "/Postcards/Genoa/image5.jpg",
+        "/Postcards/Genoa/image6.jpg",
+        "/Postcards/Genoa/image7.jpg",
+        "/Postcards/Genoa/image8.jpg",
+        "/Postcards/Genoa/image9.jpg",
+        "/Postcards/Genoa/image10.jpg",
+        "/Postcards/Genoa/image11.jpg",
+        "/Postcards/Genoa/image13.jpg",
+        "/Postcards/Genoa/image14.jpg",
+        "/Postcards/Genoa/image15.jpg",
+        "/Postcards/Genoa/image16.jpg",
+        "/Postcards/Genoa/image18.jpg",
+        "/Postcards/Genoa/image19.jpg",
+    ]
   },
   { name: "Cinque", 
     src: "/Postcards/CinquePostcard.png", 
-    des: "Cinque Terre", 
+    des: " I visited Cinque Terre with one friend on a day trip while traveling from Genoa to Florence. We started in Monterosso before making our way to Vernazza, then climbed the many stairs up to Corniglia, where we rewarded ourselves with gelato. From there, we continued on to Manarola and ended the day in Riomaggiore, taking in the colorful villages and stunning coastal views along the way.", 
     recs: [
-      
+      "Pippo a Vernazza", 
+      "Alberto"
     ] ,
-    photos: []
+    photos: [
+      "/Postcards/Cinque/image1.jpg",
+        "/Postcards/Cinque/image2.jpg",
+        "/Postcards/Cinque/image3.jpg",
+        "/Postcards/Cinque/image4.jpg",
+        "/Postcards/Cinque/image5.jpg",
+        "/Postcards/Cinque/image6.jpg",
+        "/Postcards/Cinque/image7.jpg",
+        "/Postcards/Cinque/image8.jpg",
+        "/Postcards/Cinque/image9.jpg",
+        "/Postcards/Cinque/image10.jpg",
+        "/Postcards/Cinque/image11.jpg",
+        "/Postcards/Cinque/image13.jpg",
+        "/Postcards/Cinque/image14.jpg",
+        "/Postcards/Cinque/image15.jpg",
+        "/Postcards/Cinque/image16.jpg",
+        "/Postcards/Cinque/image18.jpg",
+        "/Postcards/Cinque/image19.jpg",
+        "/Postcards/Cinque/image20.jpg",
+    ]
   },
    { name: "LakeDist", 
     src: "/Postcards/LakeDistPostcard.png", 
@@ -649,11 +709,30 @@ const postcards = [
   },
   { name: "York", 
     src: "/Postcards/YorkPostcard.png", 
-    des: "York", 
+    des: " I took a day trip to York with my parents, where we explored The Shambles and visited York Minster, which was absolutely stunning inside. We walked along the city walls and browsed the markets, where I picked up a little ghost stuffed animal as a souvenir. Afterward, we headed to The Lion Inn in Blakely Ridge, where we enjoyed a classic Sunday roast and stayed overnight in one of the Inn’s cozy rooms.", 
     recs: [
-      
+      "Bettys", 
+      "York Minster", 
+      "The Lion Inn"
     ] ,
-    photos: []
+    photos: [
+       "/Postcards/York/image1.jpg",
+        "/Postcards/York/image2.jpg",
+        "/Postcards/York/image3.jpg",
+        "/Postcards/York/image4.jpg",
+        "/Postcards/York/image5.jpg",
+        "/Postcards/York/image6.jpg",
+        "/Postcards/York/image7.jpg",
+        "/Postcards/York/image8.jpg",
+        "/Postcards/York/image9.jpg",
+        "/Postcards/York/image10.jpg",
+        "/Postcards/York/image11.jpg",
+        "/Postcards/York/image13.jpg",
+        "/Postcards/York/image14.jpg",
+        "/Postcards/York/image15.jpg",
+        "/Postcards/York/image16.jpg",
+        "/Postcards/York/image18.jpg",
+    ]
   },
 ];
 
