@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import PostcardModal from "../components/postcards"
 
 type Stamp = {
@@ -51,7 +51,6 @@ export default function StampsSlider() {
   const [showPostcard, setShowPostcard] = useState(false);
   const [clickedStampIndex, setClickedStampIndex] = useState<number | null>(null);
   const [stampOpacity, setStampOpacity] = useState(1);
-  const postcardControls = useAnimation();
   const [postcardOpacity, setPostcardOpacity] = useState(0);
   const [readyToRevealOriginal, setReadyToRevealOriginal] = useState(false);
 
@@ -82,10 +81,8 @@ export default function StampsSlider() {
   }, [paused]);
 
     const [animationPhase, setAnimationPhase] = useState<number>(0); // 0 = not animating, 1 = scaling up, 2 = moving to final position
-    // compute this every render
-    const floaterOpacity =
-      animationPhase === 2 ? (1 - postcardOpacity) : 1; // phase 2 only: inverse of postcard
 
+    
   const getPostcardTarget = () => {
     const maxHeight = window.innerHeight * 0.95;
     const width = maxHeight * (stampAspectRatio ?? (18 / 24));
@@ -225,9 +222,9 @@ export default function StampsSlider() {
           {tripled.map((stamp, i) => {
             // Check if this is the clicked stamp (considering the tripled array)
             const isAnimatingStamp =
-                selectedStamp && stamp.name === selectedStamp.name;
+                selectedStamp && stamp.name === selectedStamp.name || clickedStampIndex !== null && i === clickedStampIndex;
 
-            const shouldHideOriginal = isAnimatingStamp &&
+            const shouldHideOriginal = isAnimatingStamp && isAnimating && 
               (animationPhase === 1 || animationPhase === 2 || (animationPhase === 3 && !readyToRevealOriginal));
 
             
@@ -238,7 +235,7 @@ export default function StampsSlider() {
                 ref={(el) => {
                   stampRefs.current[i] = el;
                 }}
-                onClick={(e) => handleClick(stamp, i)}
+                onClick={() => handleClick(stamp, i)}
                 style={{
                   opacity: shouldHideOriginal ? 0 : 1,
                   transform: "scale(1)",

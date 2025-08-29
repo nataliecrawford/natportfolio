@@ -1,12 +1,9 @@
 "use client";
-import Lenis from '@studio-freight/lenis';
 import { useScroll, useTransform, motion, useMotionValueEvent, easeOut,  easeInOut, useInView } from "framer-motion";
 import { useRef, useEffect,useState } from "react";
-import { MotionValue, useMotionValue } from "framer-motion";
+import { MotionValue } from "framer-motion";
 import Image from "next/image";
 
-
-import { useMotionTemplate } from "framer-motion";
 
 
 
@@ -122,11 +119,6 @@ const AnimatedCard = ({ card, index, scrollProgress, totalCards }: AnimatedCardP
 
   const cardHeight = 85; // vh
 
- 
-
-  const totalWeight = (totalCards * (totalCards + 1)) / 2;
-  const startWeight = (index * (index + 1)) / 2;
-  const endWeight = startWeight + index + 1;
 
   const segmentSize = 1 / totalCards;
   const segmentStart = index * segmentSize;

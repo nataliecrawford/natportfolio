@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { details, p } from "framer-motion/client";
 
 const projectCards = [
   { title: "LearnLink",           

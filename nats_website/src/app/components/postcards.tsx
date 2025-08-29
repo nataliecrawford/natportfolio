@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
+
 interface PostcardModalProps {
   postcardName: string;
   onClose: () => void;
@@ -741,7 +742,6 @@ const PostcardModal: React.FC<PostcardModalProps> = ({ postcardName, onClose, st
   const postcard = postcards.find((p) => p.name === postcardName);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
-  const [modalRect, setModalRect] = useState<DOMRect | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [isPhotoHovered, setIsPhotoHovered] = useState(false);
@@ -758,11 +758,7 @@ const PostcardModal: React.FC<PostcardModalProps> = ({ postcardName, onClose, st
   }, [postcard, isPhotoHovered]);
 
 
-  useEffect(() => {
-    if (modalRef.current) {
-      setModalRect(modalRef.current.getBoundingClientRect());
-    }
-  }, []);
+
 
   useEffect(() => {
     if (!postcard) return;
@@ -784,7 +780,6 @@ const PostcardModal: React.FC<PostcardModalProps> = ({ postcardName, onClose, st
   // Calculate maximum size that fits within viewport while maintaining aspect ratio
   const maxViewportWidth = window.innerWidth * 0.9;
   const maxViewportHeight = window.innerHeight * 0.9;
-  const aspectRatio = dimensions.width / dimensions.height;
 
   let displayWidth = dimensions.width;
   let displayHeight = dimensions.height;

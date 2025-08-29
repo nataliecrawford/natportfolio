@@ -1,14 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-
 
 
 
 const Bio = () => {
   
-
   return (
     <div className="bio-font w-full h-[25vh] px-6 py-4 text-lg sm:text-xl md:text-2xl leading-relaxed">
       <p>
@@ -20,7 +16,6 @@ const Bio = () => {
         global adventures, or checkout my projects, work experience, skills, education, and artistic expression below.
       </p>
 
-    
     </div>
   );
 };
