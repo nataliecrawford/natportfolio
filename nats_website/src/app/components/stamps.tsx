@@ -1,8 +1,10 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PostcardModal from "../components/postcards"
+import Image from "next/image";
 
 type Stamp = {
   name: string;
@@ -244,10 +246,13 @@ export default function StampsSlider() {
                 }}
               >
                 <div className="stamp-wrap w-[clamp(280px,25vw,480px)] h-[clamp(320px,30vw,540px)] rounded-lg overflow-hidden relative select-none">
-                  <img
+                  <Image
                     alt={stamp.name}
                     src={stamp.src}
-                    className="object-cover object-center pointer-events-none select-none w-full h-full"
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    priority={i < images.length} // optional: prioritize first loop
+                    className="object-cover object-center pointer-events-none select-none"
                   />
                 </div>
               </div>

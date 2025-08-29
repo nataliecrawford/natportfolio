@@ -12,7 +12,7 @@ const Bio = () => {
         With a background in computer science and software engineering as well as a lifetime of creativity, 
         I am eager about design and human centered engineering. 
         This portfolio showcases my whole journey, and a lot went into developing it. 
-        To learn more about this development process, see the "This Portfolio" page in Projects. Click on the stamps above to learn more about my
+        To learn more about this development process, see the &quot;This Portfolio&quot; page in Projects. Click on the stamps above to learn more about my
         global adventures, or checkout my projects, work experience, skills, education, and artistic expression below.
       </p>
 
