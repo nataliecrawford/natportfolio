@@ -222,9 +222,9 @@ export default function StampsSlider() {
           {tripled.map((stamp, i) => {
             // Check if this is the clicked stamp (considering the tripled array)
             const isAnimatingStamp =
-                selectedStamp && stamp.name === selectedStamp.name || clickedStampIndex !== null && i === clickedStampIndex;
+                selectedStamp && stamp.name === selectedStamp.name || clickedStampIndex !== null && i === clickedStampIndex && isAnimating;
 
-            const shouldHideOriginal = isAnimatingStamp && isAnimating && 
+            const shouldHideOriginal = isAnimatingStamp && 
               (animationPhase === 1 || animationPhase === 2 || (animationPhase === 3 && !readyToRevealOriginal));
 
             
