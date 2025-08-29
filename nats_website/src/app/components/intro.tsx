@@ -6,6 +6,8 @@ const Intro = () => {
     "Front-End Engineer",
     "Web Developer",
     "Artistic Creator",
+    "Software Engineer",
+    "UX/UI Designer",
   ];
 
   const [currentPhrase, setCurrentPhrase] = useState(0);

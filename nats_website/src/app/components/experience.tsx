@@ -18,6 +18,8 @@ const cards = [
     des: "At 929 Kitchen and Bar, I served in a fast-paced, busy restaurant where I often balanced the needs of up to ten tables at once while managing customer needs and directing the flow of the dining experience. I worked to maintain both employee and customer satisfaction in a high-pressure environment, demonstrating strong multitasking skills and the ability to handle many responsibilities simultaneously.",
     tags: ["Restaurant Industry", "Server", "Multitasking", "Jan 2023 - Present"],
     images: ["/exp/929/image1.jpg", "/exp/929/image2.jpg", "/exp/929/image3.jpg"],
+    photoCredit: "929 Kitchen & Bar Instagram",
+    photoCreditUrl: "https://www.instagram.com/929kitchen?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     bgColor: "#bf052b",
     bubColor: "#f5a3b0",
     textColor: "#6b0319",
@@ -28,6 +30,8 @@ const cards = [
     des: "I managed the unique responsibility of cooking for guests at their tables, often overseeing multiple grills at once in a fast-paced environment. This required careful attention to timing and detail to ensure food was prepared correctly, while simultaneously maintaining strong customer service and balancing the needs of several tables at the same time. The role sharpened my multitasking abilities, strengthened my ability to perform under pressure, and taught me how to create a positive experience.",
     tags: ["Customer Service", "Teamwork", "Fast-Paced", "Sep 2023 - Feb 2025"],
     images: ["/exp/MOA/image1.jpg", "/exp/MOA/image2.jpg", "/exp/MOA/image3.jpg"],
+    photoCredit: "MOA Korean BBQ & Bar - Columbia Instagram",
+    photoCreditUrl: "https://www.instagram.com/moakoreancola?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     bgColor: "#db1f45",
     bubColor: "#f5a3b0",
     textColor: "#7c1a28",
@@ -215,6 +219,18 @@ const AnimatedCard = ({ card, index, scrollProgress, totalCards }: AnimatedCardP
               fill
               className="object-cover object-center pointer-events-none transition-opacity duration-500"
             />
+            {card.photoCredit && card.photoCreditUrl && (
+              <p className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
+                <a
+                  href={card.photoCreditUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:opacity-80"
+                >
+                  {card.photoCredit}
+                </a>
+              </p>
+            )}
           </div>
         </div>
       </div>

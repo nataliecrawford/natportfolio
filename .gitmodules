@@ -1,0 +1,3 @@
+[submodule "nats_website/public/camp-system"]
+	path = nats_website/public/camp-system
+	url = https://github.com/nataliecrawford/camp-system.git

@@ -90,17 +90,27 @@ export default function Skills({
       ? "text-base px-3 py-1.5"
       : "text-lg px-2.5 py-1";
 
-  return (
-    <div className={`flex flex-wrap px-10 py-10 ${gapClassName} ${className}`}>
-      {list.map((skill) => (
-        <span
-          key={skill.name}
-          style={{ backgroundColor: skill.bg, color: skill.text }}
-          className={`${sizeStyles} rounded-full font-normal shadow-sm transition px-4`}
-        >
-          {skill.name}
-        </span>
-      ))}
+    return (
+    <div className="w-full">
+      {/* Heading */}
+      <h2 className="h-font text-[clamp(32px,6vw,64px)] font-bold  text-center">
+        Skills
+      </h2>
+
+      {/* Skills list */}
+      <div className={`flex flex-wrap px-10 py-10 ${gapClassName} ${className}`}>
+        {list.map((skill) => (
+         <span
+            key={skill.name}
+            style={{ backgroundColor: skill.bg, color: skill.text }}
+            className={`${sizeStyles} rounded-full font-normal shadow-sm transition px-4 transform hover:scale-130 duration-200`}
+          >
+            {skill.name}
+          </span>
+
+        ))}
+      </div>
     </div>
   );
+
 }
