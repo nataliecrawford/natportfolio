@@ -157,10 +157,7 @@ export default function StampsSlider() {
       top: rect.top,
       left: rect.left,
       width: rect.width,          // <- use the real width
-      height: rect.height,
-      // optional: store transform too if you want to assert it hasn't changed
-      // @ts-ignore
-      transformX: transformXAtClick,
+      height: rect.height, 
     });
 
     setStampAspectRatio(aspectRatio);
