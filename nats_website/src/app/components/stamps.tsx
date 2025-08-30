@@ -56,7 +56,6 @@ export default function StampsSlider() {
   const [postcardOpacity, setPostcardOpacity] = useState(0);
   const [readyToRevealOriginal, setReadyToRevealOriginal] = useState(false);
   const [phase1Started, setPhase1Started] = useState(false);
-  const [phase3Started, setPhase3Started] = useState(false);
   const [phase3CloneReady, setPhase3CloneReady] = useState(false);
 
 
@@ -389,7 +388,6 @@ const closeModal = async () => {
                       requestAnimationFrame(() => {
                         requestAnimationFrame(() => {
                           setPhase3CloneReady(true);
-                          setPhase3Started(true);
                         });
                       });
                     }}
@@ -424,7 +422,6 @@ const closeModal = async () => {
                     setAnimationPhase(0);
                     setIsAnimating(false);
                     setReadyToRevealOriginal(false);
-                    setPhase3Started(false);
                     setPhase3CloneReady(false);
                     setShowPostcard(false);
                   }}
