@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
-
+import Image from "next/image";
 
 interface PostcardModalProps {
   postcardName: string;
@@ -763,7 +763,7 @@ const PostcardModal: React.FC<PostcardModalProps> = ({ postcardName, onClose, st
   useEffect(() => {
     if (!postcard) return;
 
-    const img = new Image();
+    const img = new window.Image();
     img.src = postcard.src;
     
     img.onload = () => {
@@ -809,11 +809,16 @@ const PostcardModal: React.FC<PostcardModalProps> = ({ postcardName, onClose, st
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          <img
+          {/* Main postcard image — use width/height to avoid CLS */}
+          <Image
             src={postcard.src}
             alt={postcard.des}
+            width={displayWidth}
+            height={displayHeight}
             className="w-full h-full object-contain"
+            priority
           />
+
           <div className="absolute top-10 left-2 w-1/2 p-10 flex items-end">
             <h2 className="text-2xl font-bold leading-loose"
               style={{ color: "#063274" ,
@@ -852,13 +857,14 @@ const PostcardModal: React.FC<PostcardModalProps> = ({ postcardName, onClose, st
               onMouseEnter={() => setIsPhotoHovered(true)}
               onMouseLeave={() => setIsPhotoHovered(false)}
             >
-              {/* key forces a quick fade on change */}
-              <img
-                key={photoIndex}
-                src={postcard.photos[photoIndex]}
-                alt={`${postcard.name} photo ${photoIndex + 1}`}
-                className="absolute inset-0 w-full h-full object-cover duration-500"
-              />
+              <Image
+                  key={photoIndex} // forces a quick fade if you also add a CSS transition
+                  src={postcard.photos[photoIndex]}
+                  alt={`${postcard.name} photo ${photoIndex + 1}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 240px, 340px"
+                />
             </div>
 
           </div>
