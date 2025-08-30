@@ -1,5 +1,5 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
+
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -55,8 +55,13 @@ export default function StampsSlider() {
   const [stampOpacity, setStampOpacity] = useState(1);
   const [postcardOpacity, setPostcardOpacity] = useState(0);
   const [readyToRevealOriginal, setReadyToRevealOriginal] = useState(false);
+  const [phase1Started, setPhase1Started] = useState(false);
+  const [phase3Started, setPhase3Started] = useState(false);
+  const [phase3CloneReady, setPhase3CloneReady] = useState(false);
 
-  
+
+
+  const MotionBox = motion.div;
 
   useEffect(() => {
     const scroll = () => {
@@ -83,6 +88,9 @@ export default function StampsSlider() {
   }, [paused]);
 
     const [animationPhase, setAnimationPhase] = useState<number>(0); // 0 = not animating, 1 = scaling up, 2 = moving to final position
+
+    
+
 
     
   const getPostcardTarget = () => {
@@ -184,27 +192,26 @@ export default function StampsSlider() {
     setIsAnimating(false);
   };
 
-  const closeModal = async () => {
-   
+const closeModal = async () => { 
+    
     setShowPostcard(false);
-    setStampOpacity(1);
-    // Wait for fade out to complete
-    await new Promise(resolve => setTimeout(resolve, 200));
-    setStampOpacity(1);
-    // Start reverse animation for stamp
-    setAnimationPhase(3); // New phase for reverse animation
-    setIsAnimating(true);
-    
-    // Wait for stamp to return
-    await new Promise(resolve => setTimeout(resolve, 1200));
-    
-    // Reset all states
-    setPaused(false);
-    setSelectedStamp(null);
+    setStampOpacity(1); 
+    // Wait for fade out to complete 
+    await new Promise(resolve => setTimeout(resolve, 200)); 
+    setStampOpacity(1); 
+    // Start reverse animation for stamp 
+    setAnimationPhase(3); 
+    // New phase for reverse animation 
+    setIsAnimating(true); 
+    // Wait for stamp to return 
+    await new Promise(resolve => setTimeout(resolve, 1200)); 
+    // Reset all states 
+    setPaused(false); 
+    setSelectedStamp(null); 
     setClickedStampIndex(null);
-    setShowPostcard(false);
-    setAnimationPhase(0);
-    setIsAnimating(false);
+    setShowPostcard(false); 
+    setAnimationPhase(0); 
+    setIsAnimating(false); 
   };
 
   
@@ -224,10 +231,16 @@ export default function StampsSlider() {
           {tripled.map((stamp, i) => {
             // Check if this is the clicked stamp (considering the tripled array)
             const isAnimatingStamp =
-                selectedStamp && stamp.name === selectedStamp.name || clickedStampIndex !== null && i === clickedStampIndex && isAnimating;
+              (selectedStamp && stamp.name === selectedStamp.name) ||
+              (clickedStampIndex !== null && i === clickedStampIndex && isAnimating);
 
-            const shouldHideOriginal = isAnimatingStamp && 
-              (animationPhase === 1 || animationPhase === 2 || (animationPhase === 3 && !readyToRevealOriginal));
+            const shouldHideOriginal =
+              isAnimatingStamp &&
+              (
+                (animationPhase === 1 && phase1Started) ||   // hide only once phase 1 actually starts
+                  animationPhase === 2 ||                      // ok to hide during phase 2
+                (animationPhase === 3 && !readyToRevealOriginal && phase3CloneReady) // your existing return logic
+              );
 
             
             return (
@@ -241,7 +254,7 @@ export default function StampsSlider() {
                 style={{
                   opacity: shouldHideOriginal ? 0 : 1,
                   transform: "scale(1)",
-                  transition: 'opacity 0.3s ease',
+                  transition: 'opacity 0.7s ease',
                   pointerEvents: shouldHideOriginal ? 'none' : 'auto'
                 }}
               >
@@ -267,66 +280,133 @@ export default function StampsSlider() {
           <>
             {/* First animation phase - scale up to center */}
             {animationPhase === 1 && (
-              <motion.img
+              <MotionBox
                 key="center-animation"
-                src={selectedStamp.src}
                 initial={{
                   position: "fixed",
                   top: startRect!.top,
                   left: startRect!.left,
                   width: startRect!.width,
                   height: startRect!.height,
+                  borderRadius: 12,
+                  zIndex: 1000,
                 }}
                 animate={{
                   top: getPostcardTarget().top,
                   left: getPostcardTarget().left,
                   width: getPostcardTarget().width,
                   height: getPostcardTarget().height,
+                  borderRadius: 12,
                   transition: { duration: 0.8, ease: "easeInOut" },
                 }}
                 exit={{ opacity: 0 }}
-                className="object-cover object-center select-none pointer-events-none"
-                style={{ position: "fixed", zIndex: 1000, borderRadius: "12px" }}
+                onAnimationStart={() => setPhase1Started(true)}
                 onAnimationComplete={handleCenterComplete}
-                draggable={false}
-              />
+                style={{ 
+                   position: "fixed",
+                    zIndex: 1000,
+                    willChange: "top,left,width,height,opacity,transform",
+                    backfaceVisibility: "hidden",
+                    transform: "translateZ(0)",
+                 }}
+                className="object-cover object-center select-none pointer-events-none"
+              >
+                <Image
+                  src={selectedStamp.src}
+                  alt={selectedStamp.name}
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-center select-none pointer-events-none"
+                  priority
+                  draggable={false}
+                />
+              </MotionBox>
             )}
 
             {/* Second animation phase - move to final position */}
             {animationPhase === 2 && (
-              <motion.img
+              <MotionBox
                 key="final-animation"
-                src={selectedStamp.src}
                 initial={{
                   position: "fixed",
                   top: getPostcardTarget().top,
                   left: getPostcardTarget().left,
                   width: getPostcardTarget().width,
                   height: getPostcardTarget().height,
+                  borderRadius: 12,
+                  zIndex: 1000,
                 }}
                 animate={{
                   top: getFinalTarget().top,
                   left: getFinalTarget().left,
                   width: getFinalTarget().width,
                   height: getFinalTarget().height,
+                  borderRadius: 12,
                   transition: { duration: 0.6, ease: "easeInOut" },
                 }}
-                className="object-cover object-center select-none pointer-events-none"
-                style={{ position: "fixed", zIndex: 1000, borderRadius: "12px", opacity:stampOpacity}}
+                style={{ position: "fixed", opacity: stampOpacity, transition: 'opacity 0.2s ease', }}
                 onAnimationComplete={handleFinalComplete}
-              />
+                className="object-cover object-center select-none pointer-events-none"
+              >
+                <Image
+                  src={selectedStamp.src}
+                  alt={selectedStamp.name}
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-center select-none pointer-events-none"
+                  priority
+                />
+              </MotionBox>
             )}
 
+            {/* Phase-3 preload: mount clone at postcard-stamp position, hidden */}
+              {showPostcard && selectedStamp && animationPhase !== 3 && (
+                <MotionBox
+                  key="phase3-preload"
+                  initial={false}
+                  animate={false}
+                  style={{
+                    position: "fixed",
+                    top: getFinalTarget().top,
+                    left: getFinalTarget().left,
+                    width: getFinalTarget().width,
+                    height: getFinalTarget().height,
+                    borderRadius: 12,
+                    zIndex: 1001,      // above modal (modal was 999 in your code)
+                    opacity: 0,        // hidden while preloading
+                    pointerEvents: "none",
+                  }}
+                >
+                  <Image
+                    src={selectedStamp.src}
+                    alt={selectedStamp.name}
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center select-none pointer-events-none"
+                    priority
+                    onLoadingComplete={() => {
+                      // loaded — now wait for paint
+                      requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                          setPhase3CloneReady(true);
+                          setPhase3Started(true);
+                        });
+                      });
+                    }}
+                  />
+                </MotionBox>
+              )}
+
               {animationPhase === 3 && (
-                <motion.img
+                <MotionBox
                   key="return-animation"
-                  src={selectedStamp.src}
                   initial={{
                     position: "fixed",
                     top: getFinalTarget().top,
                     left: getFinalTarget().left,
                     width: getFinalTarget().width,
                     height: getFinalTarget().height,
+                    borderRadius: 12,
                     zIndex: 1001,
                   }}
                   animate={{
@@ -334,31 +414,47 @@ export default function StampsSlider() {
                     left: startRect!.left,
                     width: startRect!.width,
                     height: startRect!.height,
-                    transition: { duration: 0.8, ease: "easeInOut" },
+                    borderRadius: 12,
                     zIndex: 1001,
+                    transition: { duration: 0.8, ease: "easeInOut" },
                   }}
-                  
-                  onAnimationStart={() => { // Delay slightly before revealing the original 
-                    setTimeout(() => setReadyToRevealOriginal(true), 620); // ~200ms before end 
-                  }}
+                  onAnimationStart={() => setTimeout(() => setReadyToRevealOriginal(true), 500)}
                   onAnimationComplete={() => {
                     setClickedStampIndex(null);
                     setAnimationPhase(0);
                     setIsAnimating(false);
-                    setReadyToRevealOriginal(false); // reset for next time
+                    setReadyToRevealOriginal(false);
+                    setPhase3Started(false);
+                    setPhase3CloneReady(false);
+                    setShowPostcard(false);
                   }}
-                  className="object-cover object-center select-none pointer-events-none"
                   style={{
                     position: "fixed",
-                    zIndex: 1001,                 // below the postcard (which will be 1000+)
-                    borderRadius: "12px",
+                    zIndex: 1001,
                     willChange: "top,left,width,height,opacity,transform",
                     backfaceVisibility: "hidden",
                     transform: "translateZ(0)",
-                    opacity:stampOpacity
+                    opacity: stampOpacity,
                   }}
-
-                />
+                  className="object-cover object-center select-none pointer-events-none"
+                >
+                  <Image
+                    src={selectedStamp.src}
+                    alt={selectedStamp.name}
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center select-none pointer-events-none"
+                    priority
+                    onLoadingComplete={() => {
+                    // 3) Once loaded, fade the modal out
+                    requestAnimationFrame(() => {
+                      requestAnimationFrame(() => {
+                        setPostcardOpacity(0);
+                      });
+                    });
+                  }}
+                  />
+                </MotionBox>
               )}
 
           </>
