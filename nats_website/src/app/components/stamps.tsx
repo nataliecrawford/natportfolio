@@ -258,7 +258,6 @@ const closeModal = async () => {
                     src={stamp.src}
                     fill
                     sizes="(max-width: 1024px) 50vw, 25vw"
-                    priority={i < images.length} // optional: prioritize first loop
                     className="object-cover object-center pointer-events-none select-none"
                   />
                 </div>
