@@ -150,8 +150,6 @@ export default function StampsSlider() {
     const rect = wrapEl.getBoundingClientRect();
     const aspectRatio = rect.width / rect.height; // ← This is the original AR
 
-    // store the current strip transform so return uses the same frame of reference
-    const transformXAtClick = x.current;
 
     setStartRect({
       top: rect.top,
